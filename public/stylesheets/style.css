@@ -1,8 +1,382 @@
-body {
-  padding: 50px;
-  font: 1.8rem "Lucida Grande", Helvetica, Arial, sans-serif;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-a {
-  color: #00B7FF;
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Roboto', sans-serif;
+    background-image: url(/images/44211.jpg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    background-attachment: fixed;
+    overflow-x: hidden;
+    height: 100vh;
+
+}
+
+
+
+
+.astronauta,
+.astronauta_two {
+    width: 350px;
+    position: absolute;
+    overflow: hidden;
+    
+}
+
+.astronauta_two {
+    left: 2rem;
+    top: 5rem;
+    animation: astronauta_two 3s ease-in-out infinite;
+}
+
+
+.astronauta {
+    right: -1rem;
+    top: 14 rem;
+    animation: astronauta 3s ease-in-out infinite;
+}
+
+
+@keyframes astronauta {
+    0% {
+        transform: translateY(0%);
+    }
+
+    50% {
+        transform: translateY(60%);
+    }
+
+    100% {
+        transform: translateY(0%);
+    }
+}
+
+
+@keyframes astronauta_two {
+    0% {
+        transform: translateY(60%);
+    }
+
+    50% {
+        transform: translateY(0%);
+    }
+
+    100% {
+        transform: translateY(60%);
+    }
+}
+
+
+
+
+.Content-father {
+    width: 780px;
+    background-color: crimson;
+    height: 800px;
+    display: flex;
+    margin-top: .5rem;
+    border-radius: 20px;
+    overflow: hidden;
+
+}
+
+.content {
+    transform: translateY(-.9rem);
+}
+
+.details {
+    text-align: center;
+    width: 100%;
+}
+
+.detailss {
+    transform: translateX(-.8rem);
+}
+
+
+.profile {
+    padding: 1.7rem;
+    width: 45%;
+    height: 100%;
+    background-color: #001024;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.about-me {
+    position: relative;
+    overflow: hidden;
+    padding-right: 0rem;
+    width: 100%;
+    height: 100%;
+    background-color: #ddd;
+}
+
+
+img {
+    width: 200px;
+    border-radius: 100%;
+    object-fit: cover;
+    
+}
+
+.contact {
+    width: 200px;
+    text-align: left;
+    color: white;
+    transform: translateX(-1rem);
+}
+
+
+
+.skills {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    color: aqua;
+}
+
+.skills p {
+    padding-right: .4rem;
+}
+
+
+
+.html {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: .5rem;
+}
+
+.color-title {
+    color: white;
+}
+
+.bar {
+    width: 130px;
+    height: 6px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.bar::after {
+    position: absolute;
+    content: '';
+    background-color: rgb(0, 187, 255);
+    left: 0;
+    width: 0%;
+    height: 6px;
+    
+}   
+
+
+
+.bar-html::after {
+    animation: bar-html 1.5s ease-in-out forwards;
+    animation-delay: .2s;
+}
+
+
+.bar-css::after {
+    animation: bar-css 1.5s ease-in-out forwards;
+    animation-delay: .4s;
+}
+
+.bar-js::after {
+    animation: bar-js 1.5s ease-in-out forwards;
+    animation-delay: .6s;
+}
+
+
+.bar-spanish::after {
+    animation: bar-spanish 1.5s ease-in-out forwards;
+    animation-delay: .8s;
+}
+
+@keyframes bar-html {
+    0% {
+        width: 0%;
+    }
+
+    100% {
+        width: 80%;
+    }
+}
+
+@keyframes bar-spanish {
+    0% {
+        width: 0%;
+    }
+
+    100% {
+        width: 100%;
+    }
+}
+
+
+
+@keyframes bar-css {
+    0% {
+        width: 0%;
+    }
+
+    100% {
+        width: 70%;
+    }
+}
+
+
+@keyframes bar-js {
+    0% {
+        width: 0%;
+    }
+
+    100% {
+        width: 50%;
+    }
+}
+
+
+.about-me svg {
+    position: relative;
+    height: 160px;
+    top: 0;
+    
+}
+
+.svg_wave {
+    transform: translateX(-13rem);
+}
+
+
+
+h1 {
+    padding: 1.2rem;
+    transform: translateY(.5rem);
+    position: absolute;
+    top: 0;
+    color: white;
+}
+
+
+.profile__info {
+    padding: 1rem;
+}
+
+img[src="/images/user.svg"],
+img[src="/images/computer.svg"],
+img[src="/images/student.svg"] {
+    width: 1.8rem;
+}
+
+.personal__info {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.personal__info p {
+    
+    padding-left: .3rem;
+}
+
+.personal__info p::before {
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 6px;
+    background-color: #0092ca;
+    transform: translate(3.9rem, .3rem);
+    border-radius: 5px;
+}
+
+
+.experiencia p::before {
+    transform: translate(7.3rem, .3rem);
+}
+
+.educacion p::before {
+    transform: translate(6.6rem, .3rem);
+}
+
+span::before {
+    content: "\2022";  /* Add content: \2022 is the CSS Code/unicode for a bullet */
+    color: rgb(0, 146, 165); /* Change the color */
+    font-weight: bold; /* If you want it to be bold */
+    padding-right: .2rem;
+}
+
+
+.font {
+    font-size: 1.1rem;
+}
+
+.font + p {
+    padding-left: .4rem;
+    font-size: .9rem;
+}
+
+
+hr {
+    text-align: center;
+    border: 0;
+    border: 1px solid #0092a5;
+    width: 60%;
+}
+
+
+.hr {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.phone-content{
+    display: flex;
+    align-items: center;
+    padding-bottom: .3rem;
+}
+
+.phone {
+    width: 25px;
+}
+
+.email-content {
+    display: flex;
+    align-items: center;
+    padding-bottom: .3rem;
+}
+
+.email {
+    width: 24px;
+    border-radius: 0%;
+    margin-right: .2rem;
+}
+
+.gps {
+    width: 25px;
+}
+
+.gps-content {
+    display: flex;
+    align-items: center;
+}
+
+@media screen and (max-width:1312px) {
+    .astronauta,
+    .astronauta_two {
+        display: none;
+    }
 }
