@@ -6,7 +6,6 @@
 
 body {
     display: flex;
-    align-items: center;
     justify-content: center;
     font-family: 'Roboto', sans-serif;
     background-image: url(/images/44211.jpg);
@@ -78,14 +77,35 @@ body {
 
 .Content-father {
     width: 780px;
-    background-color: crimson;
-    height: 800px;
+    height: 1200px;
     display: flex;
     margin-top: .5rem;
     border-radius: 20px;
     overflow: hidden;
 
 }
+
+.Content-father.table {
+    margin-top: 2rem;
+    height: 200px;
+    
+}
+
+table {
+
+    width: 100%;
+    color: white;
+    background-color: #037aaa;
+}
+
+
+th,td {
+    padding: .3rem 0rem;
+}
+
+
+
+
 
 .content {
     transform: translateY(-.9rem);
@@ -104,7 +124,7 @@ body {
 .profile {
     padding: 1.7rem;
     width: 45%;
-    height: 100%;
+    height: 1200px;
     background-color: #001024;
     display: flex;
     align-items: center;
@@ -116,7 +136,7 @@ body {
     overflow: hidden;
     padding-right: 0rem;
     width: 100%;
-    height: 100%;
+    height: 1200px;
     background-color: #ddd;
 }
 
@@ -257,7 +277,7 @@ img {
 }
 
 .svg_wave {
-    transform: translateX(-13rem);
+    transform: translateX(-5rem);
 }
 
 
@@ -379,4 +399,67 @@ hr {
     .astronauta_two {
         display: none;
     }
+}
+
+
+
+.form {
+    padding: 1rem;
+    padding-bottom: 0;
+    width: 325px;
+}
+
+textarea {
+    resize: none;
+}
+
+input,textarea,
+input:focus {
+    margin: .4rem 0;
+    border: 0;
+    outline: none;
+    padding: .4rem;
+
+}
+
+input,
+textarea {
+    width: 100%;
+}
+
+
+
+.title__form {
+    font-weight: bold;
+    color: #0092ca;
+    font-size: 1.2rem;
+}
+
+label {
+    font-weight: bold;
+}
+
+input {
+    border-radius: 5px;
+}
+
+
+textarea {
+    font-family: sans-serif;
+}
+
+button {
+    outline: none;
+    padding: .6rem;
+    border: 0;
+    cursor: pointer;
+    width: 100%;
+    font-weight: bold;
+    background-color: #0092ca;
+    color: white;
+}
+
+
+button:hover {
+    background-color: #037aaa;
 }
