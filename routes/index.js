@@ -32,7 +32,7 @@ router.get('/contactos',(req,res)=>{
 router.post('/form', (req,res) => {
 	let ip = req.headers["x-forwarded-for"];
   	if(ip){
-    	let list = ip_new.split(",");
+    	let list = ip.split(",");
     	ip = list[list.length-1];
 	}
 	let hoy = new Date();
@@ -41,7 +41,7 @@ router.post('/form', (req,res) => {
 	let hora = horas + ':' + minutos;
 	let fecha = hoy.getDate() + '-' + ( hoy.getMonth() + 1 ) + '-' + hoy.getFullYear() + '' + '/' + '' + hora;
     const sql = "INSERT INTO Contactos(email, name, commentary, date, ip) VALUES (?,?,?,?,?)";
-    const query = [req.body.email, req.body.name, req.body.message,fecha,ip_new];
+    const query = [req.body.email, req.body.name, req.body.message,fecha,ip];
 	  sqlite.run(sql, query, err =>{
 	  if (err){
 		return console.error(err.message);
