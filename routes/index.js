@@ -29,7 +29,7 @@ router.get('/contactos', (req, res) => {
 })
 
 
-router.post('/form', async(req, res) => {
+router.post('/form', async (req, res) => {
 	const ipaddress = req.headers['x-forwarded-for']?.split(',').shift() || req.socket?.remoteAddress;
 
 	let hoy = new Date();
@@ -76,7 +76,7 @@ router.post('/form', async(req, res) => {
 							<p>Comentario: ${comentario}</p>
 							<p>Fecha: ${fecha}</p>
 							<p>IP: ${ipaddress}</p>
-							<pli>Pais: ${pais}</p>
+							<pli>Pais: ${country}</p>
 							`;
 		const receiver = {
 			from: process.env.EMAIL,
