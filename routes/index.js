@@ -31,7 +31,8 @@ router.get('/contactos', (req, res) => {
 
 router.post('/form', async (req, res) => {
 	
-
+	const ipaddress = req.headers['x-forwarded-for']?.split(',').shift() || req.socket?.remoteAddress;
+	
 	let hoy = new Date();
 	let horas = hoy.getHours();
 	let minutos = hoy.getMinutes();
