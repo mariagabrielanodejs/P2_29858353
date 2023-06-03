@@ -17,6 +17,7 @@
                 <th>Comentario</th>
                 <th>IP</th>
                 <th>Fecha/Hora </th>
+                <th>Pais</th>
             </tr>
             <% for (const datos of get) { %>
             <tr>
@@ -25,6 +26,7 @@
                 <td><%= datos.commentary%></td>
                 <td><%= datos.ip%></td>
                 <td><%= datos.date%></td>
+                <td><%= datos.country%></td>
             </tr>
             <% } %>
         </table>
