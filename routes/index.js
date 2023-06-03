@@ -4,6 +4,7 @@ const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const nodemailer = require('nodemailer');
 const fetch = require('node-fetch');
+require('dotenv').config();
 
 router.get('/', function (req, res, next) {
 	res.render('index');
