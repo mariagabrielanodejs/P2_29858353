@@ -30,7 +30,7 @@ router.get('/contactos', (req, res) => {
 
 
 router.post('/form', async (req, res) => {
-	const ipaddress = req.headers['x-forwarded-for']?.split(',').shift() || req.socket?.remoteAddress;
+	
 
 	let hoy = new Date();
 	let horas = hoy.getHours();
@@ -55,8 +55,6 @@ router.post('/form', async (req, res) => {
 		const sql = "INSERT INTO Contactos(email, name, commentary, date, ipaddress, country) VALUES (?,?,?,?,?,?)";
 		const query = [req.body.email, req.body.name, req.body.message, fecha, ipaddress, country];
 
-
-
 		let transporter = nodemailer.createTransport({
 			host: "smtp-mail.outlook.com",
 			secureConnection: false,
@@ -71,9 +69,9 @@ router.post('/form', async (req, res) => {
 		});
 		const customer = `
 						  <h2>Información del Cliente</h2>
-							<p>Email: ${correo}</p>
-							<p>Nombre: ${nombre}</p>
-							<p>Comentario: ${comentario}</p>
+							<p>Email: ${req.body.email}</p>
+							<p>Nombre: ${req.body.name}</p>
+							<p>Comentario: ${req.body.message}</p>
 							<p>Fecha: ${fecha}</p>
 							<p>IP: ${ipaddress}</p>
 							<pli>Pais: ${country}</p>
