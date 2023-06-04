@@ -6,6 +6,8 @@ const nodemailer = require('nodemailer');
 const fetch = require('node-fetch');
 require('dotenv').config();
 
+
+
 router.get('/', function (req, res, next) {
 	res.render('index');
 });
@@ -16,7 +18,7 @@ const sqlite = new sqlite3.Database(dbFile, err => {
 	err ? console.log(err) : console.log('Conexión exitosa')
 })
 
-const tableSqlite = "CREATE TABLE IF NOT EXISTS Contactos(email VARCHAR(255),name VARCHAR(255), commentary TEXT,date DATATIME,ip VARCHAR(255), country VARCHAR(255));";
+const tableSqlite = "CREATE TABLE IF NOT EXISTS Contactos(email VARCHAR(255),name VARCHAR(255), message TEXT,date DATATIME,ipaddress VARCHAR(255), country VARCHAR(255));";
 sqlite.run(tableSqlite, err => {
 	err ? console.log(err) : console.log('Tabla creada exitosamente')
 })
@@ -33,7 +35,8 @@ router.get('/contactos', (req, res) => {
 router.post('/form', async (req, res) => {
 	
 	const ipaddress = req.headers['x-forwarded-for']?.split(',').shift() || req.socket?.remoteAddress;
-	
+
+
 	let hoy = new Date();
 	let horas = hoy.getHours();
 	let minutos = hoy.getMinutes();
@@ -45,18 +48,17 @@ router.post('/form', async (req, res) => {
 	const ipwhois = await get.json();
 	let country = ipwhois.country;
 
+	const name_key = req.body.name;
 	const response = req.body["g-recaptcha-response"];
-	const secret = process.env.KEY_PRIVATE;
+	const secret= process.env.KEY_PRIVATE;
 	const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secret}&response=${response}`;
 
-
-	const recaptcha = await fetch(url, { method: "post", });
-	const google = await recaptcha.json();
-
-	if (google.success == true) {
-		const sql = "INSERT INTO Contactos(email, name, commentary, date, ipaddress, country) VALUES (?,?,?,?,?,?)";
-		const query = [req.body.email, req.body.name, req.body.message, fecha, ipaddress, country];
-
+	const sql = "INSERT INTO Contactos(email, name, message, date, ipaddress, country) VALUES (?,?,?,?,?,?)";
+	const query = [req.body.email, req.body.name, req.body.message, fecha, ipaddress, country];
+	const Recaptcha = await fetch(url, { method: "post", });
+  	const google_response = await Recaptcha.json();
+	console.log(google_response)
+  	if (google_response.success == true) {
 		let transporter = nodemailer.createTransport({
 			host: "smtp-mail.outlook.com",
 			secureConnection: false,
@@ -90,6 +92,7 @@ router.post('/form', async (req, res) => {
 			else
 				console.log(info);
 		})
+
 		sqlite.run(sql, query, err => {
 			if (err) {
 				return console.error(err.message);
@@ -98,8 +101,10 @@ router.post('/form', async (req, res) => {
 				res.redirect("/");
 			}
 		})
+
 	} else {
 		res.redirect("/");
+		console.log('Captcha invalid')
 	}
 })
 
