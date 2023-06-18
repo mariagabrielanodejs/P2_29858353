@@ -154,9 +154,6 @@ router.post('/form', async (req, res) => {
 	}
 })
 
-router.use(passport.initialize());
-router.use(passport.session());
-
 
 passport.serializeUser((user, done) => {
     done(null, user.id);
