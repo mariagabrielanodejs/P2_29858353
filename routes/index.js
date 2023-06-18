@@ -13,6 +13,10 @@ router.get('/', function (req, res, next) {
 	res.render('index');
 });
 
+
+router.use(passport.initialize());
+router.use(passport.session());
+
 const dbFile = path.join(__dirname, "database", "datas.db");
 
 const sqlite = new sqlite3.Database(dbFile, err => {
