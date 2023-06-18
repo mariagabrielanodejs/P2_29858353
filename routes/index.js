@@ -14,8 +14,7 @@ router.get('/', function (req, res, next) {
 });
 
 
-router.use(passport.initialize());
-router.use(passport.session());
+
 
 const dbFile = path.join(__dirname, "database", "datas.db");
 
