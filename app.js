@@ -6,6 +6,7 @@ var logger = require('morgan');
 var passport = require("passport");
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var session = require('express-session');
 
 var app = express();
 
@@ -38,9 +39,15 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.use(express.session({ secret: 'SECRET' }));
-router.use(passport.initialize());
-router.use(passport.session());
+app.set('trust proxy', 1) // trust first proxy
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}))
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 module.exports = app;
