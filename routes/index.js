@@ -4,9 +4,10 @@ const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const nodemailer = require('nodemailer');
 const fetch = require('node-fetch');
+const GitHubStrategy = require("passport-github2");
+const passport = require("passport");
+const jwt = require("jsonwebtoken");
 require('dotenv').config();
-
-
 
 router.get('/', function (req, res, next) {
 	res.render('index');
@@ -24,11 +25,53 @@ sqlite.run(tableSqlite, err => {
 })
 
 
-router.get('/contactos', (req, res) => {
+
+protectRoute = async (req, res, next) => {
+	if (req.cookies.jwt) {
+	  try {
+		const tokenAuthorized = await promisify(jwt.verify)(req.cookies.jwt,'token');
+		if (tokenAuthorized) {
+		  return next();
+		}
+		req.user = 1
+	  } catch (error) {
+		console.log(error);
+		return next();
+	  }
+	} else {
+	  res.redirect("/login");
+	}
+  };
+
+  router.get('/contactos', protectRoute,(req, res) => {
 	const query = "SELECT * FROM Contactos;";
 	sqlite.all(query, [], (err, rows) => {
 		res.render("contactos.ejs", { get: rows })
 	})
+})
+
+
+router.get('/login',(req,res) => {
+	res.render('login');
+})
+
+router.post('/login', (req,res) => {
+	let usuario = req.body.usuario;
+	let contraseña = req.body.password;
+
+	let userPeriod = 'admin'
+	let userPassword = 'admin'
+
+	if(usuario == userPeriod && contraseña == userPassword) {
+		const id = 1
+    	const token = jwt.sign({ id: id }, 'token');
+    	res.cookie("jwt", token);
+		res.redirect('/contactos')
+	}
+	else {
+		res.redirect('/login')
+	}
+
 })
 
 
@@ -98,7 +141,7 @@ router.post('/form', async (req, res) => {
 				return console.error(err.message);
 			}
 			else {
-				res.redirect("/");
+				res.redirect("/login");
 			}
 		})
 
@@ -107,6 +150,38 @@ router.post('/form', async (req, res) => {
 		console.log('Captcha invalid')
 	}
 })
+
+passport.serializeUser((user, done) => {
+    done(null, user.id);
+  });
+  passport.deserializeUser((user, done) => {
+    done(null, user);
+  });
+
+router.get('/auth/github',passport.authenticate('github', { scope: [ 'user:email' ] }));
+router.get('/auth/github/callback', 
+  passport.authenticate('github', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    const id = 1
+    const token = jwt.sign({ id: id }, 'token');
+    res.cookie("jwt", token);
+    res.redirect("/contactos");
+  });
+
+passport.use(new GitHubStrategy({
+    clientID: process.env.GITHUB_CLIENT_ID,
+    clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    callbackURL: "https://mariagabriela-p2.onrender.com/auth/github/callback"
+  },
+  function (request, accessToken, refreshToken, profile, cb) {
+	cb(null,profile)
+} 
+));
+
+
+
+
 
 
 module.exports = router;
